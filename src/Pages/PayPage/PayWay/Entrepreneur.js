@@ -1,8 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './Entrepreneur.scss';
 
-export default class Entrepreneur extends Component {
-  render() {
-    return <input type="text" className="entrepreneurInput" />;
-  }
+export default function Entrepreneur() {
+  return <input type="text" className="entrepreneurInput" />;
 }

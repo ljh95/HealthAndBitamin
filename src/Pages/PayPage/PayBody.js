@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PayDelivery from './PayBody/PayDelivery';
 import PayOrder from './PayBody/PayOrder';
 import PayDiscount from './PayBody/PayDiscount';
@@ -7,40 +7,31 @@ import PayWay from './PayBody/PayWay';
 import PayBenefit from './PayBody/PayBenefit';
 import './PayBody.scss';
 
-export default class PayBody extends Component {
-  render() {
-    const {
-      type,
-      productList,
-      shippingFee,
-      name,
-      address,
-      subAddress,
-      phone_number,
-      email,
-      message,
-      changeValue,
-    } = this.props;
+export default function PayBody({
+  type, //
+  productList, //
+  shippingFee, //
+  formData,
+  changeValue, //
+}) {
+  const payTypeTable = {
+    delivery: (
+      <PayDelivery
+        name={formData.name}
+        address={formData.address}
+        subAddress={formData.subAddress}
+        phone_number={formData.phone_number}
+        email={formData.email}
+        message={formData.message}
+        changeValue={changeValue}
+      />
+    ),
+    order: <PayOrder productList={productList} shippingFee={shippingFee} />,
+    discount: <PayDiscount />,
+    info: <PayInfo />,
+    way: <PayWay />,
+    benefit: <PayBenefit />,
+  };
 
-    const payTypeTable = {
-      delivery: (
-        <PayDelivery
-          name={name}
-          address={address}
-          subAddress={subAddress}
-          phone_number={phone_number}
-          email={email}
-          message={message}
-          changeValue={changeValue}
-        />
-      ),
-      order: <PayOrder productList={productList} shippingFee={shippingFee} />,
-      discount: <PayDiscount />,
-      info: <PayInfo />,
-      way: <PayWay />,
-      benefit: <PayBenefit />,
-    };
-
-    return <>{payTypeTable[type]}</>;
-  }
+  return <>{payTypeTable[type]}</>;
 }
