@@ -5,10 +5,10 @@ export default function RealReview() {
   const [reviewList, setReviewList] = useState([]);
 
   useEffect(() => {
-    fetch('http://18.116.64.187:8000/products/main-review')
+    fetch('/data/MainData/Review.json')
       .then(res => res.json())
       .then(data => {
-        setReviewList(data.MAIN_PAGE_REVIEW.slice(0, 8));
+        setReviewList(data.REAL_REVIEW.slice(0, 8));
       });
   }, []);
 

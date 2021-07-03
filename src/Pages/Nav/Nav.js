@@ -47,15 +47,15 @@ function Nav() {
                 onClick={() => changePage('/basket')}
                 className="goToBasket"
               >
-                <i class="fas fa-shopping-bag"></i>
+                <i className="fas fa-shopping-bag"></i>
               </span>
               <span
                 onClick={() => changePage('/favoriteproduct')}
                 className="goToFavortie"
               >
-                <i class="fas fa-heart"></i>
+                <i className="fas fa-heart"></i>
               </span>
-              <i class="fas fa-search"></i>
+              <i className="fas fa-search"></i>
             </div>
           </div>
         </div>
@@ -66,21 +66,22 @@ function Nav() {
             <div className="menu">
               <ul>
                 <li className="goToSomething">
-                  <span onClick={goMain} className="goLink">
+                  <span onClick={() => goMain()} className="goLink">
                     Main
                   </span>
                   <div
                     className="goLink"
-                    onClick={setIsdownClick(!isDownClick)}
+                    onClick={() => setIsdownClick(!isDownClick)}
                   >
                     ProductList
                     {!isDownClick && (
                       <div className="aboutList">
                         {!!navList.length &&
-                          navList.map(category => {
+                          navList.map((category, idx) => {
                             return (
                               <span
                                 className="smallList"
+                                key={idx}
                                 onClick={() =>
                                   changePage(
                                     `/product-list/${

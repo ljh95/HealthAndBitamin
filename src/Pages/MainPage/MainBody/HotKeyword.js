@@ -16,7 +16,7 @@ function HotKeyword() {
 
   useEffect(() => {
     // fetch('localhost:8000/products/main-hashtag')
-    fetch('http://18.116.64.187:8000/products/main-hashtag')
+    fetch('/data/MainData/Hashtag.json')
       .then(res => res.json())
       .then(data => {
         setTagCategoryList(data);

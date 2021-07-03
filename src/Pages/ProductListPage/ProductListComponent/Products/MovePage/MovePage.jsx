@@ -7,12 +7,12 @@ function MovePage() {
       <div className="change left">
         <div className="change-btn">
           <button>
-            <i class="change-icon fas fa-angle-left"></i>
+            <i className="change-icon fas fa-angle-left"></i>
           </button>
         </div>
         <div className="change-btn">
           <button>
-            <i class="change-icon fas fa-angle-double-left"></i>
+            <i className="change-icon fas fa-angle-double-left"></i>
           </button>
         </div>
       </div>
@@ -20,12 +20,12 @@ function MovePage() {
       <div className="change pr-right">
         <div className="change-btn">
           <button>
-            <i class="change-icon fas fa-angle-right"></i>
+            <i className="change-icon fas fa-angle-right"></i>
           </button>
         </div>
         <div className="change-btn">
           <button>
-            <i class="change-icon fas fa-angle-double-right"></i>
+            <i className="change-icon fas fa-angle-double-right"></i>
           </button>
         </div>
       </div>

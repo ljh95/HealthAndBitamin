@@ -34,9 +34,7 @@ class ProductDetail extends Component {
   }
 
   fetchProductDetailItem = () => {
-    fetch(
-      `http://18.116.64.187:8000/products/detail/${this.props.match.params.id}`
-    )
+    fetch(`/data/ProductInfoData/testDetail.json`)
       .then(res => res.json())
       .then(data => {
         const {
