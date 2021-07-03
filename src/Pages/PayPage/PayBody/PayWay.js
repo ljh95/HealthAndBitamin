@@ -1,38 +1,8 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import SelectWay from '../PayWay/SelectWay';
 import UseNext from '../PayWay/UseNext';
 import PayWayContent from '../PayWay/PayWayContent';
 import './PayWay.scss';
-
-export default class PayWay extends Component {
-  constructor() {
-    super();
-    this.state = {
-      currentDisplay: 'card',
-    };
-  }
-
-  changeCurrentDisplay = id => {
-    this.setState({
-      currentDisplay: id,
-    });
-  };
-
-  render() {
-    return (
-      <div className="way">
-        <div className="content">
-          <SelectWay
-            radioList={radioList}
-            changeCurrentDisplay={this.changeCurrentDisplay}
-          />
-          <PayWayContent id={this.state.currentDisplay} />
-          <UseNext />
-        </div>
-      </div>
-    );
-  }
-}
 
 const radioList = [
   {
@@ -56,3 +26,20 @@ const radioList = [
     desc: '카카오페이(간편결제)',
   },
 ];
+
+export default function PayWay() {
+  const [currentDisplay, setCurrentDisplay] = useState('card');
+
+  return (
+    <div className="way">
+      <div className="content">
+        <SelectWay
+          radioList={radioList}
+          changeCurrentDisplay={id => setCurrentDisplay(id)}
+        />
+        <PayWayContent id={currentDisplay} />
+        <UseNext />
+      </div>
+    </div>
+  );
+}

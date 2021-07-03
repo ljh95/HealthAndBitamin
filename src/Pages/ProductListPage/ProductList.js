@@ -1,46 +1,37 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Title from './ProductListComponent/Title/Title';
 import Products from './ProductListComponent/Products/Products';
 import './ProductList.scss';
 import { isTruthyObj } from '../../utils/function';
 
-class ProductList extends Component {
-  constructor() {
-    super();
-    this.state = {
-      ProductList: [],
-      categoryData: {},
-    };
-  }
+function ProductList() {
+  const [productList, setProductList] = useState([]);
+  const [categoryData, setCategoryData] = useState({});
+  const { id } = useParams();
 
-  componentDidMount() {
-    fetch('http://18.116.64.187:8000/products/category')
+  useEffect(() => {
+    fetch('/data/ProductList/categoryList.json')
       .then(res => res.json())
       .then(data => {
-        this.setState({
-          categoryData: data.category[this.props.match.params.id],
-        });
+        console.log('category' + data);
+        setCategoryData(data);
       });
-    fetch(`http://18.116.64.187:8000/products/${this.props.match.params.id}`)
+    fetch('/data/ProductList/productList.json')
       .then(res => res.json())
       .then(data => {
-        console.log(data);
-        this.setState({ ProductList: data.product });
+        console.log('product' + data);
+        setProductList(data);
       });
-  }
+  }, []);
 
-  render() {
-    const { ProductList, categoryData } = this.state;
-
-    return (
-      <div className="productList">
-        {isTruthyObj(categoryData) && <Title categoryData={categoryData} />}
-        <Products prList={ProductList} />
-        <footer></footer>
-      </div>
-    );
-  }
+  return (
+    <div className="productList">
+      {isTruthyObj(categoryData) && <Title categoryData={categoryData} />}
+      <Products prList={productList} />
+      <footer></footer>
+    </div>
+  );
 }
 
-export default withRouter(ProductList);
+export default ProductList;

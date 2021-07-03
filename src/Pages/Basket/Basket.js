@@ -1,21 +1,18 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import MainBasket from './MainBasket/MainBasket';
 import './Basket.scss';
 
-class Basket extends Component {
-  constructor() {
-    super();
-    this.state = {
-      orderList: [],
-      total: 0,
-      discount: 0,
-      delivery: 2500,
-    };
-  }
+function Basket() {
+  const history = useHistory();
+
+  const [orderList, setOrderList] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [discount, setDiscount] = useState(0);
+  const [isDeliveryFree, setIsDeliveryFree] = useState(false);
 
   //[장바구니] (서버 -> 장바구니) Item 가져오기
-  componentDidMount() {
+  useEffect(() => {
     fetch('http://18.116.64.187:8000/carts', {
       headers: {
         Authorization: localStorage
@@ -29,11 +26,11 @@ class Basket extends Component {
         console.log(data);
         this.setState({ orderList: data.PRODUCT_LIST });
       });
-  }
+  }, []);
 
   // [장바구니](장바구니 -> 서버) 장바구니 담은 상품 전달하기
-  giveItemList = () => {
-    let products = this.state.orderList.map(order => {
+  const giveItemList = () => {
+    let products = orderList.map(order => {
       return {
         product_id: order.id,
         count: order.count,
@@ -57,27 +54,24 @@ class Basket extends Component {
       .then(data => {
         // { MESSAGE: SUCCESS }
       });
-    this.props.history.push('/pay');
+    history.push('/pay');
   };
 
-  deleteBasketItem = cool => {
+  const deleteBasketItem = cool => {
     // cool 이란 어떤 객체인지 구분해 주는 특정 데이터이다. ex) id
-    let { orderList } = this.state;
-    this.setState({
-      orderList: orderList.filter(({ id }) => {
+    setOrderList(
+      orderList.filter(({ id }) => {
         return id !== cool;
-      }),
-    });
-    this.deleteFetch(cool);
+      })
+    );
+    deleteFetch(cool);
   };
 
-  deleteAllOrder = () => {
-    this.setState({
-      orderList: [],
-    });
+  const deleteAllOrder = () => {
+    setOrderList([]);
   };
 
-  deleteFetch = id => {
+  const deleteFetch = id => {
     fetch('http://18.116.64.187:8000/carts', {
       method: 'DELETE',
       headers: {
@@ -91,77 +85,71 @@ class Basket extends Component {
     });
   };
 
-  changeCount = (itemId, count) => {
+  const changeCount = (itemId, count) => {
     if (!count) return;
 
-    const { orderList } = this.state;
-
-    this.setState({
-      orderList: orderList.map(order => {
+    setOrderList(
+      orderList.map(order => {
         if (order.id !== itemId) return order;
         return { ...order, count };
-        // return { ...order, count : count };
-      }),
+      })
+    );
+  };
+
+  const goToMain = () => {
+    history.push('/');
+  };
+
+  useEffect(() => {
+    let totalAmount = 0;
+    let totalDiscount = 0;
+
+    orderList.forEach(order => {
+      totalAmount += order.price * order.count;
+      totalDiscount += order.price * (order.discount / 100) * order.count;
+      if (totalAmount - totalDiscount > 20000) {
+        setIsDeliveryFree(true);
+      } else {
+        setIsDeliveryFree(false);
+      }
     });
-  };
 
-  goToMain = () => {
-    this.props.history.push('/');
-  };
+    setTotal(totalAmount);
+    setDiscount(totalDiscount);
+  }, [orderList]);
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.orderList !== this.state.orderList) {
-      let totalAmount = 0;
-      let totalDiscount = 0;
-      this.state.orderList.forEach(order => {
-        totalAmount += order.price * order.count;
-        totalDiscount += order.price * (order.discount / 100) * order.count;
-        if (totalAmount - totalDiscount > 20000) {
-          this.setState({ delivery: 0 });
-        } else {
-          this.setState({ delivery: 2500 });
-        }
-      });
+  return (
+    <div className="basket_page_body">
+      <div className="basket_page">
+        <div className="title">장바구니</div>
+        <div className="basket">
+          {orderList !== {} && (
+            <MainBasket
+              total={total}
+              discount={discount}
+              delivery={isDeliveryFree ? 0 : 2500}
+              orderList={orderList}
+              changeCount={changeCount}
+              deleteBasketItem={deleteBasketItem}
+              deleteAllOrder={deleteAllOrder}
+            />
+          )}
 
-      this.setState({ total: totalAmount, discount: totalDiscount });
-    }
-  }
-
-  render() {
-    const { orderList } = this.state;
-    return (
-      <div className="basket_page_body">
-        <div className="basket_page">
-          <div className="title">장바구니</div>
-          <div className="basket">
-            {orderList !== {} && (
-              <MainBasket
-                total={this.state.total}
-                discount={this.state.discount}
-                delivery={this.state.delivery}
-                orderList={orderList}
-                changeCount={this.changeCount}
-                deleteBasketItem={this.deleteBasketItem}
-                deleteAllOrder={this.deleteAllOrder}
-              />
-            )}
-
-            <div className="btns">
-              <div className="order_btns">
-                <button className="order_all_btn" onClick={this.giveItemList}>
-                  전체상품주문
-                </button>
-                <button className="order_select_btn">선택상품주문</button>
-              </div>
-              <button onClick={this.goToMain} className="keep_shopping">
-                쇼핑계속하기
+          <div className="btns">
+            <div className="order_btns">
+              <button className="order_all_btn" onClick={giveItemList}>
+                전체상품주문
               </button>
+              <button className="order_select_btn">선택상품주문</button>
             </div>
+            <button onClick={goToMain} className="keep_shopping">
+              쇼핑계속하기
+            </button>
           </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
-export default withRouter(Basket);
+export default Basket;

@@ -1,33 +1,32 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PayBody from './PayBody';
 import PayHeader from './PayHeader';
 import './PayContainer.scss';
 
-export default class PayContainer extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      isDiplay: false,
-    };
-  }
-
-  changeIsDiplay = () => {
-    this.setState({
-      isDiplay: !this.state.isDiplay,
-    });
-  };
-
-  render() {
-    return (
-      <div>
-        <PayHeader
-          isDiplay={this.state.isDiplay}
-          type={this.props.type}
-          changeIsDiplay={this.changeIsDiplay}
+export default function PayContainer({
+  type,
+  productList,
+  shippingFee,
+  formData,
+  changeValue,
+}) {
+  const [isDiplay, setIsDiplay] = useState(false);
+  return (
+    <div>
+      <PayHeader
+        isDiplay={isDiplay}
+        type={type}
+        changeIsDiplay={() => setIsDiplay(!isDiplay)}
+      />
+      {isDiplay && (
+        <PayBody
+          type={type}
+          productList={productList}
+          shippingFee={shippingFee}
+          formData={formData}
+          changeValue={changeValue}
         />
-        {this.state.isDiplay && <PayBody {...this.props} />}
-      </div>
-    );
-  }
+      )}
+    </div>
+  );
 }

@@ -1,9 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class SubTitle extends Component {
-  render() {
-    return <li className="sub_title">{this.props.categoryName}</li>;
-  }
+function SubTitle({ categoryName }) {
+  return <li className="sub_title">{categoryName}</li>;
 }
 
 export default SubTitle;

@@ -1,28 +1,33 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './ProductCountBox.scss';
 
-export default class ProductCountBox extends Component {
-  inputOnChange = e => {
-    const { id, updateItem, type } = this.props;
-    let newCout = this.maxValueCheck(e.target.value);
+export default function ProductCountBox({
+  count,
+  updateItem,
+  deleteItem,
+  id,
+  type,
+  stock,
+  price,
+  discount,
+  name,
+}) {
+  const inputOnChange = e => {
+    let newCout = maxValueCheck(e.target.value);
     updateItem(type, newCout, id);
   };
 
-  upClick = () => {
-    const { count, updateItem, id, type } = this.props;
-    let newCout = this.maxValueCheck(count * 1 + 1);
+  const upClick = () => {
+    let newCout = maxValueCheck(count * 1 + 1);
     updateItem(type, newCout, id);
   };
 
-  downClick = () => {
-    const { count, id, type, updateItem } = this.props;
-    let newCout = this.maxValueCheck(count <= 1 ? 2 : count);
+  const downClick = () => {
+    let newCout = maxValueCheck(count <= 1 ? 2 : count);
     updateItem(type, newCout * 1 - 1, id);
   };
 
-  maxValueCheck = count => {
-    const { stock } = this.props;
-
+  const maxValueCheck = count => {
     if (count > stock) {
       count = stock;
       alert('최대 주문 수량입니다!');
@@ -30,41 +35,36 @@ export default class ProductCountBox extends Component {
     return count;
   };
 
-  xBtnOnClick = () => {
-    const { id, type, deleteItem } = this.props;
+  const xBtnOnClick = () => {
     deleteItem(type, id);
   };
 
-  calcPrice = () => {
-    const { price, discount, count } = this.props;
+  const calcPrice = () => {
     return discount
       ? (price - price * (discount / 100)) * (count ? count : 1)
       : price * (count ? count : 1);
   };
 
-  render() {
-    const { name, count } = this.props;
-    const { inputOnChange, upClick, downClick, xBtnOnClick, calcPrice } = this;
-    return (
-      <div className="productCountBox">
-        <span className="name">{name}</span>
-        <div className="inputBox">
-          <input
-            className="input"
-            type="number"
-            value={count}
-            onChange={inputOnChange}
-          />
-          <div className="arrowBox">
-            <i className="fas fa-sort-up" onClick={upClick} />
-            <i className="fas fa-sort-down" onClick={downClick} />
-          </div>
-          <p className="x" onClick={xBtnOnClick}>
-            x
-          </p>
+  // const { inputOnChange, upClick, downClick, xBtnOnClick, calcPrice } = this;
+  return (
+    <div className="productCountBox">
+      <span className="name">{name}</span>
+      <div className="inputBox">
+        <input
+          className="input"
+          type="number"
+          value={count}
+          onChange={inputOnChange}
+        />
+        <div className="arrowBox">
+          <i className="fas fa-sort-up" onClick={upClick} />
+          <i className="fas fa-sort-down" onClick={downClick} />
         </div>
-        <span className="price">{calcPrice()}원</span>
+        <p className="x" onClick={xBtnOnClick}>
+          x
+        </p>
       </div>
-    );
-  }
+      <span className="price">{calcPrice()}원</span>
+    </div>
+  );
 }
