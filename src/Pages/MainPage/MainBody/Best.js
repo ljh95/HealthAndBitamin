@@ -7,7 +7,7 @@ function Best() {
   const [bestList, setBestList] = useState([]);
 
   useEffect(() => {
-    fetch('http://18.116.64.187:8000/products/main-best')
+    fetch('/data/MainData/Best.json')
       .then(res => res.json())
       .then(data => {
         setBestList(data.BEST_PRODUCT.slice(0, 8));

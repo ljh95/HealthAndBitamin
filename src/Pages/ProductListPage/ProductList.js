@@ -11,16 +11,17 @@ function ProductList() {
   const { id } = useParams();
 
   useEffect(() => {
-    fetch('http://18.116.64.187:8000/products/category')
+    fetch('/data/ProductList/categoryList.json')
       .then(res => res.json())
       .then(data => {
-        setCategoryData(data.category[id]);
+        console.log('category' + data);
+        setCategoryData(data);
       });
-    fetch(`http://18.116.64.187:8000/products/${id}`)
+    fetch('/data/ProductList/productList.json')
       .then(res => res.json())
       .then(data => {
-        console.log(data);
-        setProductList(data.product);
+        console.log('product' + data);
+        setProductList(data);
       });
   }, []);
 

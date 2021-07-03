@@ -17,8 +17,8 @@ function ProductsItem({ product }) {
       <img className="item_img" src={image} alt="vitamin" />
       <div className="item_title info">{name}</div>
       <div className="info_icon">
-        <i class="fab fa-elementor"></i>
-        <i class="fas fa-search"></i>
+        <i className="fab fa-elementor"></i>
+        <i className="fas fa-search"></i>
       </div>
       <div
         // onChange={noDiscount}

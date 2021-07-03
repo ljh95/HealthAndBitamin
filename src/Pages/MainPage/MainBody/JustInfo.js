@@ -16,11 +16,6 @@ export default function JustInfo() {
         <dd> 지친 하루 끝, 향기로운 위로로 다가갈게요.</dd>
       </dl>
       <p className="viewMore">VIEW MORE</p>
-      <img
-        className="productImage"
-        src="https://cdn.pixabay.com/photo/2021/01/28/08/51/girl-5957398_960_720.jpg"
-        alt="product"
-      />
     </section>
   );
 }

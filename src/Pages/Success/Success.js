@@ -9,7 +9,7 @@ function Success() {
       <div className="messageBox">
         <p className="desc">결제가 완료되었습니다!</p>
         <p className="hi">
-          Have a Vitamin Day<i class="fas fa-heart"></i>
+          Have a Vitamin Day<i className="fas fa-heart"></i>
         </p>
 
         <div>
