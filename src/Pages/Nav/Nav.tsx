@@ -2,40 +2,48 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import '../Nav/Nav.scss';
 
-function Nav() {
+type IMainCategory = [
+  {
+    main_category_id: number;
+    main_category_list: MainCategory[];
+    main_category_name: string;
+  }
+];
+
+type MainCategory = {
+  category_id: number;
+  category_name: string;
+};
+
+export default function Nav() {
   const history = useHistory();
 
   const [isNav, setIsNav] = useState(false);
-  const [isDownClick, setIsdownClick] = useState(false);
-  const [navList, setNavList] = useState([]);
+  const [isDownClick, setIsdownClick] = useState<boolean>(false);
+  const [navList, setNavList] = useState<IMainCategory>();
 
-  const goMain = () => {
+  const goMain = (): void => {
     history.push('/');
   };
 
-  const changePage = page => {
+  const changePage = (page: string): void => {
     history.push(`${page}`);
   };
 
-  useEffect(() => {
-    // fetch('http://18.116.64.187:8000/products/category')
+  useEffect((): void => {
     fetch('/data/Favorite/Favorite.json')
       .then(res => res.json())
-      .then(data => {
-        setNavList(data.category);
+      .then(({ category }) => {
+        // let category = data.category;
+        setNavList(category);
       });
   }, []);
-
-  // const cateClick = e => {
-  //   console.log(`/product-list/${e.target.id * 1 - 1}`);
-  //   history.push(`/product-list/${e.target.id}`);
-  // };
 
   return (
     <div className="Navigation">
       <div className={isNav ? 'nav_hover' : 'nav'}>
         <div className="left">
-          <div className="logo" onClick={goMain}>
+          <div className="logo" onClick={() => goMain()}>
             <img src="http://duftndoft.com/_images/ft_logo.png" alt="logo" />
           </div>
           <div className="menuBox">
@@ -76,7 +84,7 @@ function Nav() {
                     ProductList
                     {!isDownClick && (
                       <div className="aboutList">
-                        {!!navList.length &&
+                        {!!navList?.length &&
                           navList.map((category, idx) => {
                             return (
                               <span
@@ -120,5 +128,3 @@ function Nav() {
     </div>
   );
 }
-
-export default Nav;
