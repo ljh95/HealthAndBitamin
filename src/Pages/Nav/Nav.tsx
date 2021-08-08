@@ -34,7 +34,6 @@ export default function Nav() {
     fetch('/data/Favorite/Favorite.json')
       .then(res => res.json())
       .then(({ category }) => {
-        // let category = data.category;
         setNavList(category);
       });
   }, []);
