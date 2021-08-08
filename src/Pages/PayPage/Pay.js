@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import PayContainer from './PayContainer';
-import { totalPrice } from '../../Functions/funcs';
+// import { totalPrice } from '../../Functions/funcs';
 import './Pay.scss';
 
 const typeList = ['delivery', 'order', 'discount', 'way', 'benefit'];
@@ -42,13 +42,13 @@ function Pay() {
       });
   }, []);
 
-  const makeTotal = () => {
-    const isFeeCharged = totalPrice(productList) > shippingFee.shipping_fee;
+  // const makeTotal = () => {
+  //   const isFeeCharged = totalPrice(productList) > shippingFee.shipping_fee;
 
-    return (
-      totalPrice(productList) + (isFeeCharged ? shippingFee.shipping_fee : 0)
-    );
-  };
+  //   return (
+  //     totalPrice(productList) + (isFeeCharged ? shippingFee.shipping_fee : 0)
+  //   );
+  // };
 
   const payBtnClick = () => {
     const { name, address, phone_number, email, message } = formData;

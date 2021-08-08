@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 import Title from './ProductListComponent/Title/Title';
 import Products from './ProductListComponent/Products/Products';
 import './ProductList.scss';
@@ -8,19 +8,16 @@ import { isTruthyObj } from '../../utils/function';
 function ProductList() {
   const [productList, setProductList] = useState([]);
   const [categoryData, setCategoryData] = useState({});
-  const { id } = useParams();
 
   useEffect(() => {
     fetch('/data/ProductList/categoryList.json')
       .then(res => res.json())
       .then(data => {
-        console.log('category' + data);
         setCategoryData(data);
       });
     fetch('/data/ProductList/productList.json')
       .then(res => res.json())
       .then(data => {
-        console.log('product' + data);
         setProductList(data);
       });
   }, []);

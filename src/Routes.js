@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Nav from './Pages/Nav/Nav';
+import Nav from './Pages/Nav/Nav.tsx';
 import ProductInfoHeader from './Pages/ProductInfoPage/ProductInfoHeader';
 import Main from './Pages/MainPage/Main';
 import Login from './Pages/AccountPage/Login';
