@@ -7,41 +7,29 @@ import ProductInfoimage from './ProductInfoimage';
 import ProductDescript from './ProductDescript';
 import './ProductDetail.scss';
 import { api } from '../../utils/function';
+import {
+  ImageType,
+  Product,
+  ProductType,
+  SubItemType,
+} from '../../Components/Types';
 
-type image = {
-  image_id: number;
-  image_url: string;
+type ProductResponseData = {
+  RESULT: ProductEntity[];
 };
 
-export type SubItemType = {
-  id: number;
-  image_id: number;
-  image_url: string;
-  name: string;
-  price: number;
-  stock: number;
-  count: number;
-  discount: number;
-};
-
-export type Product = {
+type ProductEntity = {
   id: number;
   name: string;
   detail: string;
   price: number;
   stock: number;
-  count: number;
   shipping_fee: number;
   discount: number;
   minimum_free: number;
-  imageList: image[];
-  subItemList: SubItemType[];
-
-  currentImageUrl: string;
-  subItemAddList: number[];
+  detail_images: ImageType[];
+  option_items: SubItemType[];
 };
-
-export type productType = 'main' | 'sub';
 
 export default function ProductDetail() {
   const [product, setProduct] = useState<Product>({
@@ -105,23 +93,6 @@ export default function ProductDetail() {
         console.log(error);
       });
   }, []);
-
-  type ProductResponseData = {
-    RESULT: ProductEntity[];
-  };
-
-  type ProductEntity = {
-    id: number;
-    name: string;
-    detail: string;
-    price: number;
-    stock: number;
-    shipping_fee: number;
-    discount: number;
-    minimum_free: number;
-    detail_images: image[];
-    option_items: SubItemType[];
-  };
 
   const history = useHistory();
   const goToOtherPage = (id: number) => {
@@ -203,7 +174,7 @@ export default function ProductDetail() {
     }
   };
 
-  const updateItem = (type: productType, count: number, id: number) => {
+  const updateItem = (type: ProductType, count: number, id: number) => {
     type === 'main' ? updateMainCount(count) : updateSubCount(count, id);
   };
 
@@ -226,7 +197,7 @@ export default function ProductDetail() {
     });
   };
 
-  const deleteItem = (type: productType, id: number) => {
+  const deleteItem = (type: ProductType, id: number) => {
     type === 'main' ? deleteMainItem() : deleteSubItem(id);
   };
 
@@ -278,7 +249,6 @@ export default function ProductDetail() {
         <ProductDescript
           name={product.name}
           price={product.price}
-          // count={product.count}
           discount={product.discount}
           shipping_fee={product.shipping_fee}
         />

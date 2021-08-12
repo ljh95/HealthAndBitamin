@@ -1,29 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import './RealReview.scss';
 import { api } from '../../../utils/function';
+import { ReviewType } from '../../../Components/Types';
 
-type RealReviewResponseType = {
+type RealReviewResponse = {
   REAL_REVIEW: ReviewType[];
-};
-
-type ReviewType = {
-  gender: boolean;
-  product_image: string;
-  product_name: string;
-  review_id: number;
-  updated_at: string;
-  uploaded_at: string;
-  user_account: string;
-  user_age: number;
-  user_review: string;
-  user_review_image: string;
 };
 
 export default function RealReview() {
   const [reviewList, setReviewList] = useState<ReviewType[]>([]);
 
   useEffect(() => {
-    api<RealReviewResponseType>('/data/MainData/Review.json').then(data => {
+    api<RealReviewResponse>('/data/MainData/Review.json').then(data => {
       setReviewList(data.REAL_REVIEW.slice(0, 8));
     });
   }, []);

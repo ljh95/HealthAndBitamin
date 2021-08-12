@@ -1,14 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { BestType } from '../../../Components/Types';
 import './Best.scss';
-
-export type BestType = {
-  product_id: number;
-  image: string;
-  name: string;
-  price: number;
-  discount: number;
-};
 
 function Best() {
   const history = useHistory();

@@ -1,13 +1,13 @@
 import React from 'react';
+import { ProductType } from '../../Components/Types';
 import './ProductCountBox.scss';
-import { productType } from './ProductDetail';
 
 type ProductCountBoxType = {
   count: number;
-  updateItem: (type: productType, count: number, id: number) => void;
-  deleteItem: (type: productType, id: number) => void;
+  updateItem: (type: ProductType, count: number, id: number) => void;
+  deleteItem: (type: ProductType, id: number) => void;
   id: number;
-  type: productType;
+  type: ProductType;
   stock: number;
   price: number;
   discount: number;

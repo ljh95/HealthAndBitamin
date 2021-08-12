@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { BestType } from './Best';
 import './HotKeyword.scss';
 import { api } from '../../../utils/function';
-
-type CategoryType =
-  | 'HASH_TAG_EYE_PRODUCT'
-  | 'HASH_TAG_FOCUS_ON_PRODUCT'
-  | 'HASH_TAG_GROWTH_PRODUCT'
-  | 'HASH_TAG_SKIN_PRODUCT';
+import { BestType, CategoryTitleType } from '../../../Components/Types';
 
 type HashTagResponse = {
   HASH_TAG_EYE_PRODUCT: BestType[];
@@ -23,22 +17,23 @@ const NAME_LIST = [
   '# 탄력 있는 피부를 원해요! (비타민 a)',
   '# 눈이 침침해졌다고 느낄 땐?(비타민 c)',
 ];
+
 function HotKeyword() {
   const history = useHistory();
 
   const [tagCategoryList, setTagCategoryList] = useState<HashTagResponse>();
-  const [currentCategory, setCurrentCategory] = useState<CategoryType>(
+  const [currentCategory, setCurrentCategory] = useState<CategoryTitleType>(
     'HASH_TAG_EYE_PRODUCT'
   );
 
   useEffect(() => {
     api<HashTagResponse>('/data/MainData/Hashtag.json').then(data => {
       setTagCategoryList(data);
-      setCurrentCategory(Object.keys(data)[0]! as CategoryType);
+      setCurrentCategory(Object.keys(data)[0]! as CategoryTitleType);
     });
   }, []);
 
-  const categoryClickHandler = (category: CategoryType) => {
+  const categoryClickHandler = (category: CategoryTitleType) => {
     setCurrentCategory(category);
   };
 
@@ -60,7 +55,7 @@ function HotKeyword() {
                     key={category}
                     className="category"
                     onClick={() =>
-                      categoryClickHandler(category as CategoryType)
+                      categoryClickHandler(category as CategoryTitleType)
                     }
                   >
                     {category === currentCategory ? (
