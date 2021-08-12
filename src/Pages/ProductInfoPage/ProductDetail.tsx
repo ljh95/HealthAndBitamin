@@ -12,7 +12,18 @@ type image = {
   image_url: string;
 };
 
-type Product = {
+export type SubItemType = {
+  id: number;
+  image_id: number;
+  image_url: string;
+  name: string;
+  price: number;
+  stock: number;
+  count: number;
+  discount: number;
+};
+
+export type Product = {
   id: number;
   name: string;
   detail: string;
@@ -23,11 +34,13 @@ type Product = {
   discount: number;
   minimum_free: number;
   imageList: image[];
-  subItemList: Product[];
+  subItemList: SubItemType[];
 
   currentImageUrl: string;
   subItemAddList: number[];
 };
+
+export type productType = 'main' | 'sub';
 
 export default function ProductDetail() {
   const [product, setProduct] = useState<Product>({
@@ -36,9 +49,9 @@ export default function ProductDetail() {
     detail: '',
     price: 0,
     stock: 0,
-    count: 0,
+    count: 1,
     shipping_fee: 0,
-    discount: 0,
+    discount: 10,
     minimum_free: 0,
     imageList: [],
     subItemList: [],
@@ -63,6 +76,8 @@ export default function ProductDetail() {
           option_items,
         } = data.RESULT[0];
 
+        console.log(option_items);
+
         setProduct({
           id,
           name,
@@ -74,7 +89,9 @@ export default function ProductDetail() {
           discount,
           minimum_free,
           imageList: detail_images,
-          subItemList: option_items.map((item: Product) => {
+          subItemList: option_items.map((item: SubItemType) => {
+            item.count = 1;
+            item.discount = 10;
             return item;
           }),
 
@@ -111,7 +128,7 @@ export default function ProductDetail() {
     discount: number;
     minimum_free: number;
     detail_images: image[];
-    option_items: [];
+    option_items: SubItemType[];
   };
 
   const history = useHistory();
@@ -169,7 +186,7 @@ export default function ProductDetail() {
     });
   };
 
-  const calcTotalPrice = () => {
+  const calcTotalPrice = (): number => {
     const { price, count, discount, subItemList, subItemAddList } = product!;
     return (
       price * count -
@@ -194,9 +211,7 @@ export default function ProductDetail() {
     }
   };
 
-  type type = 'main' | 'sub';
-
-  const updateItem = (type: type, count: number, id: number) => {
+  const updateItem = (type: productType, count: number, id: number) => {
     type === 'main' ? updateMainCount(count) : updateSubCount(count, id);
   };
 
@@ -219,7 +234,7 @@ export default function ProductDetail() {
     });
   };
 
-  const deleteItem = (type: type, id: number) => {
+  const deleteItem = (type: productType, id: number) => {
     type === 'main' ? deleteMainItem() : deleteSubItem(id);
   };
 
