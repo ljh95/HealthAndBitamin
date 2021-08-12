@@ -6,6 +6,7 @@ import ProductTotalBox from './ProductTotalBox';
 import ProductInfoimage from './ProductInfoimage';
 import ProductDescript from './ProductDescript';
 import './ProductDetail.scss';
+import { api } from '../../utils/function';
 
 type image = {
   image_id: number;
@@ -104,15 +105,6 @@ export default function ProductDetail() {
         console.log(error);
       });
   }, []);
-
-  function api<T>(url: string): Promise<T> {
-    return fetch(url).then(response => {
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-      return response.json();
-    });
-  }
 
   type ProductResponseData = {
     RESULT: ProductEntity[];

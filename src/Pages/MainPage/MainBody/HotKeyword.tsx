@@ -1,6 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { BestType } from './Best';
 import './HotKeyword.scss';
+import { api } from '../../../utils/function';
+
+type CategoryType =
+  | 'HASH_TAG_EYE_PRODUCT'
+  | 'HASH_TAG_FOCUS_ON_PRODUCT'
+  | 'HASH_TAG_GROWTH_PRODUCT'
+  | 'HASH_TAG_SKIN_PRODUCT';
+
+type HashTagResponse = {
+  HASH_TAG_EYE_PRODUCT: BestType[];
+  HASH_TAG_FOCUS_ON_PRODUCT: BestType[];
+  HASH_TAG_GROWTH_PRODUCT: BestType[];
+  HASH_TAG_SKIN_PRODUCT: BestType[];
+};
 
 const NAME_LIST = [
   '# 우리 아이 성장에 쑥쑥! 도움이 되는!',
@@ -11,24 +26,23 @@ const NAME_LIST = [
 function HotKeyword() {
   const history = useHistory();
 
-  const [tagCategoryList, setTagCategoryList] = useState({});
-  const [currentCategory, setCurrentCategory] = useState('');
+  const [tagCategoryList, setTagCategoryList] = useState<HashTagResponse>();
+  const [currentCategory, setCurrentCategory] = useState<CategoryType>(
+    'HASH_TAG_EYE_PRODUCT'
+  );
 
   useEffect(() => {
-    // fetch('localhost:8000/products/main-hashtag')
-    fetch('/data/MainData/Hashtag.json')
-      .then(res => res.json())
-      .then(data => {
-        setTagCategoryList(data);
-        setCurrentCategory(Object.keys(data)[0]);
-      });
+    api<HashTagResponse>('/data/MainData/Hashtag.json').then(data => {
+      setTagCategoryList(data);
+      setCurrentCategory(Object.keys(data)[0]! as CategoryType);
+    });
   }, []);
 
-  const categoryClickHandler = category => {
+  const categoryClickHandler = (category: CategoryType) => {
     setCurrentCategory(category);
   };
 
-  const productClick = id => {
+  const productClick = (id: number) => {
     history.push(`/productInfo/${id}`);
   };
 
@@ -39,25 +53,28 @@ function HotKeyword() {
           <h2 className="title">라인별 HOT 키워드</h2>
           <p className="desc">향기 맛집 더프트앤도프트.</p>
           <ul className="categoryList">
-            {Object.keys(tagCategoryList).map((category, i) => {
-              return (
-                <li
-                  key={category}
-                  className="category"
-                  onClick={() => categoryClickHandler(category)}
-                >
-                  {category === currentCategory ? (
-                    <span className="liContent select">{NAME_LIST[i]}</span>
-                  ) : (
-                    <span className="liContent">{NAME_LIST[i]}</span>
-                  )}
-                </li>
-              );
-            })}
+            {!!tagCategoryList &&
+              Object.keys(tagCategoryList).map((category, i) => {
+                return (
+                  <li
+                    key={category}
+                    className="category"
+                    onClick={() =>
+                      categoryClickHandler(category as CategoryType)
+                    }
+                  >
+                    {category === currentCategory ? (
+                      <span className="liContent select">{NAME_LIST[i]}</span>
+                    ) : (
+                      <span className="liContent">{NAME_LIST[i]}</span>
+                    )}
+                  </li>
+                );
+              })}
           </ul>
         </header>
         <ul className="productList">
-          {tagCategoryList[currentCategory] &&
+          {!!tagCategoryList &&
             tagCategoryList[currentCategory].map(product => {
               const { image, name, price, product_id, discount } = product;
 
