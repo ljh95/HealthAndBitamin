@@ -6,7 +6,7 @@ import Main from './Pages/MainPage/Main';
 import Login from './Pages/AccountPage/Login';
 import SignUp from './Pages/AccountPage/SignUp';
 import ProductList from './Pages/ProductListPage/ProductList';
-import ProductDetail from './Pages/ProductInfoPage/ProductDetail';
+import ProductDetail from './Pages/ProductInfoPage/ProductDetail.tsx';
 import Basket from './Pages/Basket/Basket';
 import FavoriteProduct from './Pages/FavoriteProduct/FavoriteProduct';
 import Pay from './Pages/PayPage/Pay';

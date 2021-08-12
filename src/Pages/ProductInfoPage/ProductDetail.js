@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+/* import { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import ProductSub from './ProductSub';
 import ProductCountBox from './ProductCountBox';
@@ -6,34 +6,14 @@ import ProductTotalBox from './ProductTotalBox';
 import ProductInfoimage from './ProductInfoimage';
 import ProductDescript from './ProductDescript';
 import './ProductDetail.scss';
+import { useEffect } from 'react';
 
-class ProductDetail extends Component {
-  constructor() {
-    super();
+function ProductDetail() {
+  useEffect(() => {
+    fetchProductDetailItem();
+  }, []);
 
-    this.state = {
-      id: 0,
-      name: '',
-      detail: '',
-      price: 0,
-      stock: 0,
-      count: 1,
-      shipping_fee: 0,
-      discount: 0,
-      minimum_free: 0,
-      imageList: [],
-      subItemList: [],
-
-      currentImageUrl: '',
-      subItemAddList: [],
-    };
-  }
-
-  componentDidMount() {
-    this.fetchProductDetailItem();
-  }
-
-  fetchProductDetailItem = () => {
+  const fetchProductDetailItem = () => {
     fetch(`/data/ProductInfoData/testDetail.json`)
       .then(res => res.json())
       .then(data => {
@@ -68,7 +48,7 @@ class ProductDetail extends Component {
       });
   };
 
-  goToOtherPage = id => {
+  const goToOtherPage = id => {
     console.log(id);
     if (id === 1) {
       this.props.history.push('/pay');
@@ -107,13 +87,13 @@ class ProductDetail extends Component {
     }
   };
 
-  changeCurrentImage = index => {
+  const changeCurrentImage = index => {
     this.setState({
       currentImageUrl: this.state.imageList[index].image_url,
     });
   };
 
-  calcTotalPrice = () => {
+  const calcTotalPrice = () => {
     const { price, count, discount, subItemList, subItemAddList } = this.state;
     return (
       price * count -
@@ -127,7 +107,7 @@ class ProductDetail extends Component {
     );
   };
 
-  addSubItemList = id => {
+  const addSubItemList = id => {
     let { subItemAddList } = this.state;
 
     if (!subItemAddList.includes(id)) {
@@ -137,19 +117,19 @@ class ProductDetail extends Component {
     }
   };
 
-  updateItem = (type, count, id) => {
+  const updateItem = (type, count, id) => {
     type === 'main'
       ? this.updateMainCount(count)
       : this.updateSubCount(count, id);
   };
 
-  updateMainCount = count => {
+  const updateMainCount = count => {
     this.setState({
       count,
     });
   };
 
-  updateSubCount = (count, id) => {
+  const updateSubCount = (count, id) => {
     let { subItemList } = this.state;
 
     this.setState({
@@ -160,15 +140,15 @@ class ProductDetail extends Component {
     });
   };
 
-  deleteItem = (type, id) => {
+  const deleteItem = (type, id) => {
     type === 'main' ? this.deleteMainItem() : this.deleteSubItem(id);
   };
 
-  deleteMainItem = () => {
+  const deleteMainItem = () => {
     alert('main 제품은 삭제할 수 없습니다.');
   };
 
-  deleteSubItem = id => {
+  const deleteSubItem = id => {
     let { subItemList, subItemAddList } = this.state;
 
     this.setState({
@@ -180,114 +160,112 @@ class ProductDetail extends Component {
     });
   };
 
-  render() {
-    const {
-      id,
-      currentImageUrl,
-      imageList,
-      subItemList,
-      subItemAddList,
-      name,
-      price,
-      stock,
-      count,
-      discount,
-      shipping_fee,
-    } = this.state;
-    const {
-      changeCurrentImage,
-      addSubItemList,
-      updateItem,
-      deleteItem,
-      calcTotalPrice,
-    } = this;
-    return (
-      <div className="productDetail">
-        <aside className="imageBox">
-          <img className="productImage" src={currentImageUrl} alt="product" />
-          <ol className="productImageBox">
-            {imageList.map((image, index) => {
-              return (
-                <ProductInfoimage
-                  key={image.image_id}
-                  image={image.image_url}
-                  id={image.image_id}
-                  index={index}
-                  changeCurrentImage={changeCurrentImage}
-                />
-              );
-            })}
-          </ol>
-          <div className="expandImageBox">
-            <i className="fas fa-search" />
-            &nbsp;
-            <span className="expandImageSpan">확대보기</span>
-          </div>
-        </aside>
-        <article className="infoBox">
-          <ProductDescript
-            name={name}
-            price={price}
-            count={count}
-            discount={discount}
-            shipping_fee={shipping_fee}
-          />
-          <p className="guideArea">(최소주문수량 1개 이상)</p>
-          <ProductSub
-            subItemList={subItemList}
-            subItemAddList={subItemAddList}
-            addSubItemList={addSubItemList}
-          />
-          <p className="alertCount">
-            <span className="alertCountSpan">!</span>
-            &nbsp;&nbsp;수량을 선택해주세요.
-          </p>
-          <ProductCountBox
-            id={id}
-            type={'main'}
-            count={count}
-            price={price}
-            stock={stock}
-            name={name}
-            discount={discount}
-            updateItem={updateItem}
-            deleteItem={deleteItem}
-          />
-          {subItemList
-            .filter(product => subItemAddList.includes(product.id))
-            .map(product => {
-              return (
-                <ProductCountBox
-                  key={product.id}
-                  id={product.id}
-                  type={'sub'}
-                  name={product.name}
-                  count={product.count}
-                  price={product.price}
-                  stock={product.stock}
-                  updateItem={updateItem}
-                  deleteItem={deleteItem}
-                />
-              );
-            })}
-          <ProductTotalBox totalPrice={calcTotalPrice()} count={count} />
-          <div className="productInfoButtonBox">
-            {BUTTONS.map(el => {
-              return (
-                <button
-                  key={el.id}
-                  className={el.className}
-                  onClick={() => this.goToOtherPage(el.id)}
-                >
-                  {el.name}
-                </button>
-              );
-            })}
-          </div>
-        </article>
-      </div>
-    );
-  }
+  // const {
+  //   id,
+  //   currentImageUrl,
+  //   imageList,
+  //   subItemList,
+  //   subItemAddList,
+  //   name,
+  //   price,
+  //   stock,
+  //   count,
+  //   discount,
+  //   shipping_fee,
+  // } = this.state;
+  // const {
+  //   changeCurrentImage,
+  //   addSubItemList,
+  //   updateItem,
+  //   deleteItem,
+  //   calcTotalPrice,
+  // } = this;
+  return (
+    <div className="productDetail">
+      <aside className="imageBox">
+        <img className="productImage" src={currentImageUrl} alt="product" />
+        <ol className="productImageBox">
+          {imageList.map((image, index) => {
+            return (
+              <ProductInfoimage
+                key={image.image_id}
+                image={image.image_url}
+                id={image.image_id}
+                index={index}
+                changeCurrentImage={changeCurrentImage}
+              />
+            );
+          })}
+        </ol>
+        <div className="expandImageBox">
+          <i className="fas fa-search" />
+          &nbsp;
+          <span className="expandImageSpan">확대보기</span>
+        </div>
+      </aside>
+      <article className="infoBox">
+        <ProductDescript
+          name={name}
+          price={price}
+          count={count}
+          discount={discount}
+          shipping_fee={shipping_fee}
+        />
+        <p className="guideArea">(최소주문수량 1개 이상)</p>
+        <ProductSub
+          subItemList={subItemList}
+          subItemAddList={subItemAddList}
+          addSubItemList={addSubItemList}
+        />
+        <p className="alertCount">
+          <span className="alertCountSpan">!</span>
+          &nbsp;&nbsp;수량을 선택해주세요.
+        </p>
+        <ProductCountBox
+          id={id}
+          type={'main'}
+          count={count}
+          price={price}
+          stock={stock}
+          name={name}
+          discount={discount}
+          updateItem={updateItem}
+          deleteItem={deleteItem}
+        />
+        {subItemList
+          .filter(product => subItemAddList.includes(product.id))
+          .map(product => {
+            return (
+              <ProductCountBox
+                key={product.id}
+                id={product.id}
+                type={'sub'}
+                name={product.name}
+                count={product.count}
+                price={product.price}
+                stock={product.stock}
+                updateItem={updateItem}
+                deleteItem={deleteItem}
+              />
+            );
+          })}
+        <ProductTotalBox totalPrice={calcTotalPrice()} count={count} />
+        <div className="productInfoButtonBox">
+          {BUTTONS.map(el => {
+            return (
+              <button
+                key={el.id}
+                className={el.className}
+                onClick={() => this.goToOtherPage(el.id)}
+              >
+                {el.name}
+              </button>
+            );
+          })}
+        </div>
+      </article>
+    </div>
+  );
 }
 export default withRouter(ProductDetail);
 
@@ -308,3 +286,4 @@ const BUTTONS = [
     className: 'btnInterest btn',
   },
 ];
+ */
