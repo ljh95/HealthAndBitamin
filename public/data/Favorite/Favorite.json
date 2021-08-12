@@ -1,48 +1,30 @@
-{
-  "category": [
-    {
-      "main_category_id": 1,
-      "main_category_list": [
-        {
-          "category_id": 1,
-          "category_name": "비타민 A"
-        },
-        {
-          "category_id": 2,
-          "category_name": "비타민 B"
-        },
-        {
-          "category_id": 3,
-          "category_name": "비타민 C"
-        },
-        {
-          "category_id": 4,
-          "category_name": "비타민 D"
-        }
-      ],
-      "main_category_name": "비타민별 제품"
-    },
-    {
-      "main_category_id": 2,
-      "main_category_list": [
-        {
-          "category_id": 5,
-          "category_name": "유아 & 어린이"
-        },
-        {
-          "category_id": 6,
-          "category_name": "청소년"
-        },
-        {
-          "category_id": 7,
-          "category_name": "성인 남성"
-        },
-        {
-          "category_id": 8,
-          "category_name": "성인 여성"
-        }
-      ],
-      "main_category_name": "연령별 제품"
-    }
-  ]
-}
+[
+  {
+    "id": 1,
+    "name": "favarite 1",
+    "price": 1000,
+    "delivery": 1000,
+    "imageUrl": "https://shop-phinf.pstatic.net/20210118_155/1610943177782O1WUT_JPEG/12079012611837895_1272929187.jpg?type=f295_381"
+  },
+  {
+    "id": 2,
+    "name": "favarite 2",
+    "price": 2000,
+    "delivery": 2000,
+    "imageUrl": "https://shop-phinf.pstatic.net/20210118_177/1610943763740g7QQB_JPEG/12079598554570127_1982250700.jpg?type=f295_381"
+  },
+  {
+    "id": 3,
+    "name": "favarite 3",
+    "price": 3000,
+    "delivery": 3000,
+    "imageUrl": "https://shop-phinf.pstatic.net/20210118_177/1610943763740g7QQB_JPEG/12079598554570127_1982250700.jpg?type=f295_381"
+  },
+  {
+    "id": 4,
+    "name": "favarite 4",
+    "price": 4000,
+    "delivery": 4000,
+    "imageUrl": "https://shop-phinf.pstatic.net/20210118_177/1610943763740g7QQB_JPEG/12079598554570127_1982250700.jpg?type=f295_381"
+  }
+]
