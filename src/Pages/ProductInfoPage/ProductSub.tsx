@@ -2,7 +2,7 @@ import React from 'react';
 import ProductSubHeader from './ProductSubHeader';
 import ProductSubItem from './ProductSubItem';
 import './ProductSub.scss';
-import { Product, SubItemType } from './ProductDetail';
+import { SubItemType } from './ProductDetail';
 
 type ProductSubType = {
   subItemList: SubItemType[];
