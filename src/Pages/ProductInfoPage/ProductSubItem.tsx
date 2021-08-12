@@ -1,6 +1,6 @@
 import React from 'react';
+import { SubItemType } from '../../Components/Types';
 import './ProductSubItem.scss';
-import { SubItemType } from './ProductDetail';
 
 export type ProductSubItemType = {
   addSubItemList: (id: number) => void;

@@ -1,7 +1,12 @@
 import React from 'react';
+import { ProductListResponse } from '../../../ProductList';
 import './ProductsInfo.scss';
 
-function ProductsInfo({ prList }) {
+type ProductsInfoProps = {
+  prList: ProductListResponse[];
+};
+
+function ProductsInfo({ prList }: ProductsInfoProps) {
   return (
     <div className="products_info">
       <div className="product_count">

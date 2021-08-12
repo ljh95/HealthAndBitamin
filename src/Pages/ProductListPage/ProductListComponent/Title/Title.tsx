@@ -1,8 +1,13 @@
 import React from 'react';
+import { CategoryListResponse } from '../../ProductList';
 import SubTitle from './SubTitle';
 import './Title.scss';
 
-function Title({ categoryData }) {
+type TitleProps = {
+  categoryData: CategoryListResponse[];
+};
+
+function Title({ categoryData }: TitleProps) {
   return (
     <header className="title">
       <div className="category_title">{'category_name'}</div>
