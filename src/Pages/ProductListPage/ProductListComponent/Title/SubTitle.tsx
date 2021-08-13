@@ -1,6 +1,10 @@
 import React from 'react';
 
-function SubTitle({ categoryName }) {
+type SubTitleProps = {
+  categoryName: string;
+};
+
+function SubTitle({ categoryName }: SubTitleProps) {
   return <li className="sub_title">{categoryName}</li>;
 }
 

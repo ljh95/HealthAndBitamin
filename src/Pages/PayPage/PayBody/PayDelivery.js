@@ -3,7 +3,7 @@ import RadioButton from '../RadioButton';
 import './PayDelivery.scss';
 
 export default function PayDelivery({ name, changeValue }) {
-  const [currentId, setCurrentId] = useState('sameDelivery');
+  // const [currentId, setCurrentId] = useState('sameDelivery');
 
   const [formData, setFormData] = useState({
     firstNum: '',
@@ -16,7 +16,7 @@ export default function PayDelivery({ name, changeValue }) {
   });
 
   const changeCurrentDisplay = id => {
-    setCurrentId(id);
+    // setCurrentId(id);
   };
 
   const onChangeHandler = e => {

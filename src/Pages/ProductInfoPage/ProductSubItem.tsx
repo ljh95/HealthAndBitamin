@@ -1,13 +1,23 @@
 import React from 'react';
+import { SubItemType } from '../../Components/Types';
 import './ProductSubItem.scss';
+
+export type ProductSubItemType = {
+  addSubItemList: (id: number) => void;
+  id: number;
+  subItem: SubItemType;
+  selectValue: selectValueType;
+};
+
+type selectValueType = 'choose' | 'default';
 
 export default function ProductSubItem({
   addSubItemList,
   id,
   subItem,
   selectValue,
-}) {
-  const optionSelectOnChange = e => {
+}: ProductSubItemType) {
+  const optionSelectOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (e.target.options.selectedIndex) {
       addSubItemList(id);
     }

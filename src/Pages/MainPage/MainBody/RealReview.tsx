@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import './RealReview.scss';
+import { api } from '../../../utils/function';
+import { ReviewType } from '../../../Components/Types';
+
+type RealReviewResponse = {
+  REAL_REVIEW: ReviewType[];
+};
 
 export default function RealReview() {
-  const [reviewList, setReviewList] = useState([]);
+  const [reviewList, setReviewList] = useState<ReviewType[]>([]);
 
   useEffect(() => {
-    fetch('/data/MainData/Review.json')
-      .then(res => res.json())
-      .then(data => {
-        setReviewList(data.REAL_REVIEW.slice(0, 8));
-      });
+    api<RealReviewResponse>('/data/MainData/Review.json').then(data => {
+      setReviewList(data.REAL_REVIEW.slice(0, 8));
+    });
   }, []);
 
-  const makeAnonymousAccount = user_account => {
+  const makeAnonymousAccount = (user_account: string) => {
     return '****' + user_account.slice(4, user_account.length);
   };
 
-  const makeRandomNum = (min, max, digit) => {
+  const makeRandomNum = (min: number, max: number, digit: number): number => {
     return Math.round(Math.random() * (max - min) + min) / digit;
   };
 

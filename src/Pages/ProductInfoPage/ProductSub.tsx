@@ -2,12 +2,19 @@ import React from 'react';
 import ProductSubHeader from './ProductSubHeader';
 import ProductSubItem from './ProductSubItem';
 import './ProductSub.scss';
+import { SubItemType } from '../../Components/Types';
+
+type ProductSubType = {
+  subItemList: SubItemType[];
+  subItemAddList: number[];
+  addSubItemList: (id: number) => void;
+};
 
 export default function ProductSub({
   subItemList,
   subItemAddList,
   addSubItemList,
-}) {
+}: ProductSubType) {
   return (
     <div className="productSub">
       <ProductSubHeader />
@@ -19,7 +26,6 @@ export default function ProductSub({
               subItem={el}
               id={el.id}
               addSubItemList={addSubItemList}
-              subItemList={subItemList}
               selectValue={
                 subItemAddList.includes(el.id) ? 'choose' : 'default'
               }

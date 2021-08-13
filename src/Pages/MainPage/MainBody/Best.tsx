@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { BestType } from '../../../Components/Types';
 import './Best.scss';
 
 function Best() {
   const history = useHistory();
-  const [bestList, setBestList] = useState([]);
+  const [bestList, setBestList] = useState<BestType[]>([]);
 
   useEffect(() => {
     fetch('/data/MainData/Best.json')
@@ -14,11 +15,11 @@ function Best() {
       });
   }, []);
 
-  const makeTotalPrice = (price, discount) => {
+  const makeTotalPrice = (price: number, discount: number) => {
     return (price - (price * discount) / 100).toLocaleString();
   };
 
-  const goDetailPage = id => {
+  const goDetailPage = (id: number) => {
     history.push(`/productInfo/${id}`);
   };
 

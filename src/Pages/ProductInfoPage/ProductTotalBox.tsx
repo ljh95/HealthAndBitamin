@@ -1,7 +1,15 @@
 import React from 'react';
 import './ProductTotalBox.scss';
 
-export default function ProductTotalBox({ totalPrice, count }) {
+type ProductTotalBoxType = {
+  totalPrice: number;
+  count: number;
+};
+
+export default function ProductTotalBox({
+  totalPrice,
+  count,
+}: ProductTotalBoxType) {
   return (
     <div className="productTotalBox">
       <div className="box">

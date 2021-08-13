@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Nav from './Pages/Nav/Nav';
+import Nav from './Pages/Nav/Nav.tsx';
 import ProductInfoHeader from './Pages/ProductInfoPage/ProductInfoHeader';
 import Main from './Pages/MainPage/Main';
 import Login from './Pages/AccountPage/Login';
 import SignUp from './Pages/AccountPage/SignUp';
 import ProductList from './Pages/ProductListPage/ProductList';
-import ProductDetail from './Pages/ProductInfoPage/ProductDetail';
+import ProductDetail from './Pages/ProductInfoPage/ProductDetail.tsx';
 import Basket from './Pages/Basket/Basket';
 import FavoriteProduct from './Pages/FavoriteProduct/FavoriteProduct';
 import Pay from './Pages/PayPage/Pay';

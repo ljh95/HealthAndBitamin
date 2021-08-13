@@ -1,12 +1,19 @@
 import React from 'react';
 import './ProductDescript.scss';
 
+type ProductDescriptType = {
+  name: string;
+  price: number;
+  discount: number;
+  shipping_fee: number;
+};
+
 export default function ProductDescript({
   name,
   price,
   discount,
   shipping_fee,
-}) {
+}: ProductDescriptType) {
   return (
     <div className="productDescript">
       <h2>{name}</h2>
@@ -18,7 +25,7 @@ export default function ProductDescript({
             {price - price * (discount / 100)}원
           </span>
           <span className="discountOption">
-            &nbsp;({price * (discount / 100).toLocaleString()}원 할인)
+            &nbsp;({(price * (discount / 100)).toLocaleString()}원 할인)
           </span>
         </span>
       </div>

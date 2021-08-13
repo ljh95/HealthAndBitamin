@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import '../AccountPage/SignUp.scss';
 
@@ -87,7 +87,7 @@ function SignUp() {
                   <td className="idEnglish">
                     <input
                       className={
-                        /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(formData.id)
+                        /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(formData.id)
                           ? 'id valid'
                           : 'id notValid'
                       }

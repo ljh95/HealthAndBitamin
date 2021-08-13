@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { api } from '../../utils/function';
 import '../FavoriteProduct/FavoriteProduct.scss';
 
 const LISTS = [
@@ -14,26 +15,32 @@ const LISTS = [
   '선택',
 ];
 
-function FavoriteProduct({ id, deleteBasketItem }) {
+type FavoritListResponse = {
+  id: number;
+  name: string;
+  price: number;
+  delivery: number;
+  imageUrl: string;
+};
+
+function FavoriteProduct() {
   const history = useHistory();
+  const [favoritList, setFavoritList] = useState<FavoritListResponse[]>([]);
 
-  const [favoritList, setFavoritList] = useState([]);
-  // const [orderItem, setOrderItem] = useState([]);
-  // const [deleteItem, setDeleteItem] = useState([]);
-  // const [addCart, setAddCart] = useState([]);
-
+  const favoriteRequeestHeaders: HeadersInit = new Headers();
+  favoriteRequeestHeaders.set(
+    'Authorization',
+    localStorage
+      ?.getItem('token')
+      ?.slice(1, localStorage.getItem('token')!.length - 1) || 'no token'
+  );
   useEffect(() => {
-    fetch('/data/Favorite/Favorite.json', {
-      headers: {
-        Authorization: localStorage
-          .getItem('token')
-          .slice(1, localStorage.getItem('token').length - 1),
-      },
-    })
-      .then(res => res.json())
-      .then(data => {
-        setFavoritList(data);
-      });
+    api<FavoritListResponse[]>(
+      '/data/Favorite/Favorite.json',
+      favoriteRequeestHeaders
+    ).then(data => {
+      setFavoritList(data);
+    });
   }, []);
 
   const addCartFunc = () => {
@@ -44,27 +51,8 @@ function FavoriteProduct({ id, deleteBasketItem }) {
     history.push('/');
   };
 
-  // const deleteCart = () => {
-  //   deleteBasketItem(id);
-  // };
-
-  const deleteItemFunc = e => {
-    let index = e.target.id;
-
-    // 1. 원본 배열 접근
-    // 2. filter 함수 사용
-    // 3. 조건을 통해 원하는 값 선택
-
-    setFavoritList(
-      favoritList.filter(favorite => {
-        console.log(favorite.id);
-        if (favorite.id === Number(index)) {
-          return false;
-        } else {
-          return true;
-        }
-      })
-    );
+  const deleteItemFunc = (index: number) => {
+    setFavoritList(favoritList.filter(favorite => favorite.id !== index));
   };
 
   return (
@@ -73,7 +61,7 @@ function FavoriteProduct({ id, deleteBasketItem }) {
         <header className="olFavoriteBox">
           <ol className="favoriteList">
             <li>
-              <span to="main" className="goToLink" onClick={goMain}>
+              <span className="goToLink" onClick={goMain}>
                 <i className="fas fa-home" />
               </span>
             </li>
@@ -95,8 +83,8 @@ function FavoriteProduct({ id, deleteBasketItem }) {
             <div className="row">
               <ul>
                 <li className="menuBar">
-                  {LISTS.map(item => {
-                    return <span key={item}>{item}</span>;
+                  {LISTS.map((item, idx) => {
+                    return <span key={idx}>{item}</span>;
                   })}
                 </li>
               </ul>
@@ -132,8 +120,7 @@ function FavoriteProduct({ id, deleteBasketItem }) {
                             장바구니담기
                           </button>
                           <button
-                            id={favorite.id}
-                            onClick={deleteItemFunc}
+                            onClick={() => deleteItemFunc(favorite.id)}
                             type="submit"
                             className="deleteCart"
                           >

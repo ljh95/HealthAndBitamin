@@ -1,5 +1,18 @@
 import React from 'react';
+import { ProductType } from '../../Components/Types';
 import './ProductCountBox.scss';
+
+type ProductCountBoxType = {
+  count: number;
+  updateItem: (type: ProductType, count: number, id: number) => void;
+  deleteItem: (type: ProductType, id: number) => void;
+  id: number;
+  type: ProductType;
+  stock: number;
+  price: number;
+  discount: number;
+  name: string;
+};
 
 export default function ProductCountBox({
   count,
@@ -11,9 +24,9 @@ export default function ProductCountBox({
   price,
   discount,
   name,
-}) {
-  const inputOnChange = e => {
-    let newCout = maxValueCheck(e.target.value);
+}: ProductCountBoxType) {
+  const inputOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let newCout = maxValueCheck(Number(e.target.value));
     updateItem(type, newCout, id);
   };
 
@@ -27,7 +40,7 @@ export default function ProductCountBox({
     updateItem(type, newCout * 1 - 1, id);
   };
 
-  const maxValueCheck = count => {
+  const maxValueCheck = (count: number) => {
     if (count > stock) {
       count = stock;
       alert('최대 주문 수량입니다!');
@@ -45,7 +58,6 @@ export default function ProductCountBox({
       : price * (count ? count : 1);
   };
 
-  // const { inputOnChange, upClick, downClick, xBtnOnClick, calcPrice } = this;
   return (
     <div className="productCountBox">
       <span className="name">{name}</span>
